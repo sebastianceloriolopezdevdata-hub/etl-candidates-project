@@ -1,0 +1,484 @@
+dashboard_title: dashboard
+description: null
+css: ''
+slug: null
+uuid: e45646b0-fe1b-42f1-af9e-4952125e1c46
+position:
+  CHART-31xF-qhps4s:
+    children: []
+    id: CHART-31xF-qhps4s
+    meta:
+      chartId: 9
+      height: 26
+      sliceName: Number of countries
+      uuid: 92e6f28d-09fd-4c46-88f6-ada6f322846c
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-9fKIBtEan7D
+    - COLUMN-jeh1WCdAvxm
+    type: CHART
+  CHART-7T2SL8nVSJ2:
+    children: []
+    id: CHART-7T2SL8nVSJ2
+    meta:
+      chartId: 7
+      height: 50
+      sliceName: Hire Rate (%) by Seniority
+      uuid: 88b4f74d-2fd7-4292-bf27-c7ca6f84d36c
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-hoLktnTrHAX
+    type: CHART
+  CHART-Bx_M3pduqfY:
+    children: []
+    id: CHART-Bx_M3pduqfY
+    meta:
+      chartId: 12
+      height: 50
+      sliceName: Monthly Applications vs Hires Trend
+      uuid: 4a49588b-ec3e-45a4-84d8-54e03cf6f0cb
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-hoLktnTrHAX
+    type: CHART
+  CHART-Ct24gR2wQSr:
+    children: []
+    id: CHART-Ct24gR2wQSr
+    meta:
+      chartId: 4
+      height: 50
+      sliceName: Hires by Year
+      uuid: 510a94bd-e777-421a-ac23-3daae5370e33
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-hoLktnTrHAX
+    - COLUMN-OeksOvIz4Fd
+    type: CHART
+  CHART-DZEnsWGrIPR:
+    children: []
+    id: CHART-DZEnsWGrIPR
+    meta:
+      chartId: 13
+      height: 27
+      sliceName: Total number of technologies
+      uuid: 4010bfb7-2acc-4dc4-b787-85575b9c74b6
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-9fKIBtEan7D
+    type: CHART
+  CHART-ORNlOO9Y0Vw:
+    children: []
+    id: CHART-ORNlOO9Y0Vw
+    meta:
+      chartId: 5
+      height: 50
+      sliceName: ' Hires by Seniority'
+      uuid: 5cc048e6-a4af-4d41-a2ed-69ae9f5d688c
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-PmnerKr4wTp
+    type: CHART
+  CHART-Skz2sn42Ael:
+    children: []
+    id: CHART-Skz2sn42Ael
+    meta:
+      chartId: 11
+      height: 55
+      sliceName: Top 5 Technologies by Applications & Hires
+      uuid: 09eb648e-cb87-4e1b-9069-8c666e2a335a
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-9fKIBtEan7D
+    type: CHART
+  CHART-U4EnGwRwcGq:
+    children: []
+    id: CHART-U4EnGwRwcGq
+    meta:
+      chartId: 10
+      height: 55
+      sliceName: TOTAL APPLICATIONS BY COUNTRY
+      uuid: 63c69934-4e57-4739-b815-9667205be8c1
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-9fKIBtEan7D
+    type: CHART
+  CHART-fos1MwJ5_YH:
+    children: []
+    id: CHART-fos1MwJ5_YH
+    meta:
+      chartId: 6
+      height: 50
+      sliceName: 'Hires by Country over Years '
+      uuid: 63aa2b22-d3ed-4b3f-879e-fc96d21926eb
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-PmnerKr4wTp
+    type: CHART
+  CHART-rhHWJEa2egl:
+    children: []
+    id: CHART-rhHWJEa2egl
+    meta:
+      chartId: 3
+      height: 50
+      sliceName: ' Hires by Technology'
+      uuid: 69e8eb09-bf26-4ff8-844d-7b446b3fac85
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-hoLktnTrHAX
+    - COLUMN-OeksOvIz4Fd
+    type: CHART
+  COLUMN-O2WHUSNN5VH:
+    children:
+    - CHART-rhHWJEa2egl
+    id: COLUMN-O2WHUSNN5VH
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-PmnerKr4wTp
+    type: COLUMN
+  COLUMN-OeksOvIz4Fd:
+    children:
+    - CHART-Ct24gR2wQSr
+    id: COLUMN-OeksOvIz4Fd
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-hoLktnTrHAX
+    type: COLUMN
+  COLUMN-jeh1WCdAvxm:
+    children:
+    - CHART-31xF-qhps4s
+    - CHART-DZEnsWGrIPR
+    id: COLUMN-jeh1WCdAvxm
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-9fKIBtEan7D
+    type: COLUMN
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - ROW-9fKIBtEan7D
+    - ROW-PmnerKr4wTp
+    - ROW-hoLktnTrHAX
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: dashboard
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-9fKIBtEan7D:
+    children:
+    - COLUMN-jeh1WCdAvxm
+    - CHART-U4EnGwRwcGq
+    - CHART-Skz2sn42Ael
+    id: ROW-9fKIBtEan7D
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-PmnerKr4wTp:
+    children:
+    - COLUMN-O2WHUSNN5VH
+    - CHART-fos1MwJ5_YH
+    - CHART-ORNlOO9Y0Vw
+    id: ROW-PmnerKr4wTp
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-hoLktnTrHAX:
+    children:
+    - COLUMN-OeksOvIz4Fd
+    - CHART-7T2SL8nVSJ2
+    - CHART-Bx_M3pduqfY
+    id: ROW-hoLktnTrHAX
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+metadata:
+  chart_configuration:
+    '3':
+      id: 3
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+    '4':
+      id: 4
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+    '5':
+      id: 5
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+    '6':
+      id: 6
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 5
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+    '7':
+      id: 7
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 5
+        - 6
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+    '10':
+      id: 10
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 11
+        - 12
+        - 13
+    '11':
+      id: 11
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 12
+        - 13
+    '12':
+      id: 12
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 13
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    chartsInScope:
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+  color_scheme: ''
+  refresh_frequency: 0
+  shared_label_colors:
+    United States: '#1FA8C9'
+    Malawi: '#5AC189'
+    Spain: '#666666'
+    Cook Islands: '#FCC700'
+    Tajikistan: '#3CCCCB'
+    Italy: '#8FD3E4'
+    Samoa: '#ACE1C4'
+    Malaysia: '#B2B2B2'
+    Niger: '#FDE380'
+    Nauru: '#9EE5E5'
+    Taiwan: '#454E7C'
+    Venezuela: '#A868B7'
+    Dominica: '#FEC0A1'
+    Angola: '#D1C6BC'
+    Luxembourg: '#A38F79'
+    Hungary: '#FF7F44'
+    Martinique: '#E04355'
+    Timor-Leste: '#D3B3DA'
+    Colombia: '#A1A6BD'
+    Turks and Caicos Islands: '#EFA1AA'
+    Cambodia: '#1FA8C9'
+    Somalia: '#454E7C'
+    Singapore: '#5AC189'
+    Rwanda: '#FF7F44'
+    Lebanon: '#666666'
+    Niue: '#E04355'
+    Swaziland: '#FCC700'
+    Greenland: '#A868B7'
+    Pitcairn Islands: '#3CCCCB'
+    Nicaragua: '#A38F79'
+    Argentina: '#8FD3E4'
+    Christmas Island: '#A1A6BD'
+    Gibraltar: '#ACE1C4'
+    Ethiopia: '#FEC0A1'
+    Saint Barthelemy: '#B2B2B2'
+    Mauritania: '#EFA1AA'
+    Honduras: '#FDE380'
+    Mauritius: '#D3B3DA'
+    Mozambique: '#9EE5E5'
+    Mexico: '#D1C6BC'
+    Uruguay: '#1FA8C9'
+    Chad: '#454E7C'
+    Equatorial Guinea: '#5AC189'
+    Liberia: '#FF7F44'
+    Guatemala: '#666666'
+    Guadeloupe: '#E04355'
+    Lithuania: '#FCC700'
+    Guernsey: '#A868B7'
+    Cuba: '#3CCCCB'
+    Iran: '#A38F79'
+    Togo: '#8FD3E4'
+    Saint Lucia: '#A1A6BD'
+    Bolivia: '#ACE1C4'
+    Morocco: '#FEC0A1'
+    Sri Lanka: '#B2B2B2'
+    Poland: '#EFA1AA'
+    South Africa: '#FDE380'
+    San Marino: '#D3B3DA'
+    Chile: '#9EE5E5'
+    Turkmenistan: '#D1C6BC'
+    Gabon: '#1FA8C9'
+    Ukraine: '#454E7C'
+    Portugal: '#5AC189'
+    Japan: '#FF7F44'
+    Suriname: '#666666'
+    Belarus: '#E04355'
+    Papua New Guinea: '#FCC700'
+    Pakistan: '#A868B7'
+    Tokelau: '#3CCCCB'
+    Denmark: '#A38F79'
+    Romania: '#8FD3E4'
+    Namibia: '#A1A6BD'
+    Wallis and Futuna: '#ACE1C4'
+    Mali: '#FEC0A1'
+    Seychelles: '#B2B2B2'
+    Norway: '#EFA1AA'
+    Finland: '#FDE380'
+    Burundi: '#D3B3DA'
+    Ireland: '#9EE5E5'
+    Latvia: '#D1C6BC'
+    Djibouti: '#1FA8C9'
+    Bhutan: '#454E7C'
+    Zimbabwe: '#5AC189'
+    Guinea: '#FF7F44'
+    Liechtenstein: '#666666'
+    Thailand: '#E04355'
+    Comoros: '#FCC700'
+    Mayotte: '#A868B7'
+    Kiribati: '#3CCCCB'
+    Solomon Islands: '#A38F79'
+    SUM(total_applications): '#1FA8C9'
+    Brazil: '#454E7C'
+    Ecuador: '#FF7F44'
+    Intern, Intern: '#1FA8C9'
+    Junior, Junior: '#454E7C'
+    Trainee, Trainee: '#5AC189'
+    Architect, Architect: '#FF7F44'
+    Senior, Senior: '#666666'
+    Lead, Lead: '#E04355'
+    Mid-Level, Mid-Level: '#FCC700'
+    SUM(total_hires): '#1FA8C9'
+    SUM(hire_rate_percentage): '#1FA8C9'
+  color_scheme_domain: []
+  expanded_slices: {}
+  label_colors: {}
+  timed_refresh_immune_slices: []
+  cross_filters_enabled: true
+  default_filters: '{}'
+version: 1.0.0

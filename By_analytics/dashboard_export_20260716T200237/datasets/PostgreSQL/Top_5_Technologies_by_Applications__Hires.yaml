@@ -1,0 +1,67 @@
+table_name: Top 5 Technologies by Applications & Hires
+main_dttm_col: null
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+schema: null
+sql: "-- KPI: Top 5 Technologies by Applications & Hires\nSELECT \n    t.technology_name,\n\
+  \    COUNT(f.application_sk) AS total_applications,\n    SUM(f.is_hired) AS total_hires\n\
+  FROM fact_application f\nJOIN dim_technology t ON f.technology_sk = t.technology_sk\n\
+  GROUP BY t.technology_name\nORDER BY total_applications DESC\nLIMIT 5;"
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+uuid: fa455ec7-b04d-47f9-a76a-67fbee7a8eeb
+metrics:
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra: null
+  warning_text: null
+columns:
+- column_name: total_applications
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: LONGINTEGER
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: total_hires
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: LONGINTEGER
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: technology_name
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: STRING
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+version: 1.0.0
+database_uuid: 58544812-fc6e-4721-b7e2-69b40a65ca55
