@@ -1,320 +1,135 @@
-# 📊 Candidate Recruitment Analytics - ETL Workshop
+# Workshop 1: Technology Recruitment Data Warehouse
 
-## 📌 Project Overview
+## 1. Project Objective
 
-This project implements an end-to-end **ETL (Extract, Transform, Load)** pipeline that processes **50,000 candidate applications** and loads the cleaned data into a **PostgreSQL Data Warehouse** using a **Star Schema** dimensional model.
+Design and implement a Dimensional Data Warehouse (Star Schema) for a technology recruitment company. The system must transform raw candidate application data into analytical information that allows the organization to understand its hiring patterns and evaluate recruitment performance from different perspectives (technology, candidate profile, geographic location, and time).
 
-The entire infrastructure is containerized with **Docker Compose**, providing a complete environment for data processing and business intelligence.
+## 2. Business Context
 
-### Key Features
+The company receives thousands of applications from candidates with diverse profiles. Currently, data is stored in raw files, making analysis difficult. A centralized system is needed to allow decision-makers to answer key questions about the hiring process.
 
-- 📥 Extracts 50,000 candidate application records from a CSV dataset.
-- 🧹 Cleans and validates the data using Pandas.
-- 🔄 Applies business rules and data transformations.
-- 🐘 Loads the processed data into a PostgreSQL Data Warehouse.
-- ⭐ Implements a Star Schema dimensional model.
-- 📊 Visualizes KPIs using Apache Superset.
-- 🐳 Uses Docker Compose for easy deployment.
+## 3. Business Requirements
 
----
+Five key analytical requirements have been defined:
 
-# 🏗️ Architecture
+*   **R1 – Hiring Trends:** Monitor hiring trends over time to identify changes in recruitment outcomes.
+*   **R2 – Technology Analysis:** Compare hiring results across different technologies to identify which technical profiles generate the largest number and proportion of hired candidates.
+*   **R3 – Candidate Profile Analysis:** Analyze hiring outcomes according to candidate seniority and years of professional experience to identify differences across candidate profiles.
+*   **R4 – Geographic Efficiency Analysis:** Identify countries with the highest application volume and compare their hiring rates to evaluate the effectiveness of international recruitment strategies.
+*   **R5 – Seniority Gap Analysis by Technology:** Detect whether the right seniority profile (Junior, Mid-Level, Senior) is being hired for each technology stack.
 
-```text
-                 Raw CSV Dataset
-                        │
-                        ▼
-                  Extract (Python)
-                        │
-                        ▼
-                 Transform (Pandas)
-                        │
-                        ▼
-               Load (SQLAlchemy)
-                        │
-                        ▼
-          PostgreSQL Data Warehouse
-                        │
-                        ▼
-           Apache Superset Dashboard
-```
+## 4. Requirements Traceability
 
----
+| Requirement | Business Question | Data Required | Expected Analytical Output |
+| :--- | :--- | :--- | :--- |
+| **R1** | How has the number of hires varied over the years? | `Application Date`, `is_hired` | Line or bar chart of hires per year/quarter. |
+| **R2** | Which technologies have the highest hiring rate? | `Technology`, `is_hired` | Comparative bar chart of hiring rate by technology. |
+| **R3** | How do seniority level and years of experience influence the probability of being hired? | `Seniority`, `YOE`, `is_hired` | Table or chart crossing seniority, YOE, and hiring rate. |
+| **R4** | In which countries are we most efficient at hiring? | `Country`, `is_hired` | Map or bar chart of hiring rate by country. |
+| **R5** | Which seniority level is hired most for each technology? | `Technology`, `Seniority`, `is_hired` | Stacked bar chart of hires by technology and seniority. |
 
-# ⭐ Star Schema
+## 5. Dataset Description
 
-The Data Warehouse follows a **Star Schema** design optimized for analytical queries.
+The source dataset (`candidates.csv`) contains approximately **50,000 application records**. Each row represents a unique application.
 
-### Fact Table
+**Attributes:**
+*   `First Name`, `Last Name`, `Email`
+*   `Country`
+*   `Application Date`
+*   `YOE` (Years of Experience)
+*   `Seniority`
+*   `Technology`
+*   `Code Challenge Score` (0–10)
+*   `Technical Interview Score` (0–10)
 
-**fact_application**
+## 6. Main Data Profiling Findings
 
-Measures
+*   **Structure:** 50,000 rows, 10 columns. No null values.
+*   **Dates:** Application date range is from **2018-01-01 to 2022-07-04**.
+*   **Duplicates:** No fully duplicated rows, but **165 duplicated emails with inconsistent information** were found (different names, countries, etc.). This suggests the data is synthetic and must be handled during transformation.
+*   **Experience (YOE):** Range from 0 to 30 years, with a median of 15 years.
+*   **Scores:** Both scores range from 0 to 10, with an average of 5.0.
+*   **Business Rule (Hired):** The rule `Hired = (Code Challenge Score >= 7) AND (Technical Interview Score >= 7)` will be implemented.
 
-- Years of Experience
-- Code Challenge Score
-- Technical Interview Score
-- Hiring Status
+## 7. Business Process
+
+The business process analyzed is the **candidate selection process**. The central event is the **application of a candidate** to a technology position.
+
+## 8. Grain Definition
+
+**One row in the `fact_application` table represents a single application submitted by a candidate for a specific technology, at a specific seniority level, for a specific location (country), on a given application date.**
+
+This grain is the most atomic level available in the source data: each record corresponds to one unique application event. All dimensions (`dim_candidate`, `dim_technology`, `dim_seniority`, `dim_date`, `dim_location`) and all measures (`yoe`, `code_challenge_score`, `technical_interview_score`, `is_hired`) are fully compatible with this grain.
+
+## 9. Star Schema Diagram
+
+![Star Schema Diagram](diagrams/star_schema_dw.png)
+
+## 10. Dimensions and Facts Explanation
+
+### Fact Table: `fact_application`
+*   **Grain:** One candidate application.
+*   **Measures:**
+    *   `yoe`: Candidate's years of experience.
+    *   `code_challenge_score`: Code challenge score.
+    *   `technical_interview_score`: Technical interview score.
+    *   `is_hired`: Binary flag (1 if hired, 0 if not).
+*   **Foreign Keys:** `candidate_sk`, `technology_sk`, `seniority_sk`, `date_sk`, `location_sk`.
 
 ### Dimension Tables
+*   **`dim_candidate`**: Stores candidate identification information (`email`, `first_name`, `last_name`).
+*   **`dim_technology`**: Stores technology name (`technology_name`).
+*   **`dim_seniority`**: Stores seniority level (`seniority_name`).
+*   **`dim_date`**: Standard date dimension (`full_date`, `year`, `month`, `day`, `quarter`).
+*   **`dim_location`**: Stores application country (`country`).
 
-- dim_candidate
-- dim_location
-- dim_technology
-- dim_seniority
-- dim_date
+## 11. ETL Architecture
 
----
+The data flow is as follows:
 
-# 🖼️ Star Schema Diagram
+1.  **Extract:** Read the `candidates.csv` file using Pandas.
+2.  **Transform:** Apply the following transformations:
+    *   Data cleaning (handling duplicated emails).
+    *   Implementation of the `is_hired` business rule.
+    *   Creation of dimension tables and the fact table.
+    *   Generation of surrogate keys for each dimension.
+    *   Mapping of surrogate keys to the fact table.
+3.  **Load:** Load dimensions first, then the fact table into PostgreSQL.
 
-<p align="center">
-    <img src="diagrams/star_schema_dw.png" width="950" alt="Star Schema">
-</p>
+![ETL Architecture Workflow](diagrams/workflow.png)
 
----
+## 12. Key Transformation Decisions
 
-# ⚙️ ETL Pipeline
+*   **Handling Duplicated Emails:** Since duplicated emails have inconsistent information, each row is treated as a unique application. A `candidate_sk` is created for each unique combination of `first_name`, `last_name`, and `email` to group applications from the same person. If inconsistency persists, they are treated as different candidates.
+*   **Surrogate Key Generation:** `ROW_NUMBER()` or `IDENTITY` in the database will be used to generate surrogate keys for each dimension, ensuring natural keys are not used.
+*   **Date:** The `Application Date` column will be converted to `DATE` type and decomposed into the `dim_date` dimension.
 
-The ETL workflow is orchestrated from:
+## 13. Analytical Dashboard
 
-```bash
-python src/main.py
-```
+The dashboard presents the main recruitment KPIs generated from the star schema and the analytical queries in `By_analytics/Queries/BI.sql`.
 
-## 📥 Extract
+![Recruitment Analytics Dashboard](diagrams/dashboard.jpg)
 
-- Reads the raw CSV dataset.
-- Validates the dataset structure.
-- Loads the data into a Pandas DataFrame.
+### Dashboard Views
 
-## 🔄 Transform
+* **Hiring Trends:** Compares the number of applications by year to identify changes in recruitment volume.
+* **Seniority Gap Analysis by Technology:** Shows the number of hires by seniority level to compare hiring outcomes across profiles.
+* **Technology Analysis:** Ranks technologies by total hires and highlights the strongest recruitment results.
+* **Candidate Profile Analysis:** Shows the distribution of applications by seniority and supports comparison of candidate profiles.
+* **Geographic Efficiency Analysis:** Compares hiring results across countries to identify geographic differences.
 
-Business rules include:
+The dashboard is based on `fact_application` and its related dimensions: date, technology, seniority, candidate, and location. The `is_hired` metric follows the business rule defined in the transformation step: both the code challenge and technical interview scores must be at least 7.
 
-- Normalize column names.
-- Normalize text values.
-- Remove duplicate candidates.
-- Generate the **is_hired** flag.
-- Correct inconsistent seniority values.
-- Convert dates.
-- Export a cleaned CSV dataset.
+## 14. Technologies Used
 
-## 📤 Load
+*   **Language:** Python 3.12
+*   **Data Manipulation:** Pandas, NumPy
+*   **Database:** PostgreSQL
+*   **Visualization:** Power BI / Tableau / Looker Studio
+*   **Version Control:** Git and GitHub
 
-The ETL automatically:
+## 15. Instructions to Run the Project
 
-- Connects to PostgreSQL.
-- Creates the Data Warehouse if it does not exist.
-- Loads dimension tables.
-- Generates surrogate keys.
-- Loads the fact table.
-
----
-
-# 🐳 Docker Infrastructure
-
-The project uses Docker Compose to orchestrate all required services.
-
-| Service | Description |
-|----------|-------------|
-| 🐘 PostgreSQL | Data Warehouse |
-| 📊 Apache Superset | Business Intelligence Dashboard |
-| ⚡ Redis | Superset Cache |
-
-Start all services with:
-
-```bash
-docker compose up -d
-```
-
----
-
-# 🚀 Getting Started
-
-## 1. Clone the repository
-
-```bash
-git clone https://github.com/sebastianceloriolopezdevdata-hub/etl-candidates-project.git
-
-cd etl-candidates-project
-```
-
----
-
-## 2. Start Docker
-
-```bash
-docker compose up -d
-```
-
-This command starts:
-
-- PostgreSQL
-- Apache Superset
-- Redis
-
-Verify the containers:
-
-```bash
-docker ps
-```
-
----
-
-## 3. Create a Python Virtual Environment
-
-Linux / macOS
-
-```bash
-python -m venv .venv
-
-source .venv/bin/activate
-```
-
-Windows
-
-```powershell
-.venv\Scripts\activate
-```
-
----
-
-## 4. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 5. Configure Environment Variables
-
-Create a `.env` file in the project root.
-
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=candidates_dw
-DB_USER=postgres
-DB_PASSWORD=postgres
-```
-
----
-
-## 6. Execute the ETL
-
-```bash
-python src/main.py
-```
-
----
-
-# 📊 Dashboard
-
-Once the ETL finishes successfully, the processed data is available in **Apache Superset** for interactive visualization.
-
-Example KPIs include:
-
-- Hires by Technology
-- Hires by Country
-- Hires by Seniority
-- Hires by Year
-- Average Technical Scores
-- Hiring Rate
-
----
-
-# 📷 Dashboard Preview
-
-<p align="center">
-    <img src="diagrams/etl-completed.png" width="1000" alt="Apache Superset Dashboard">
-</p>
-
----
-
-# 🎥 Project Demonstration
-
-Watch the complete ETL pipeline execution, PostgreSQL Data Warehouse loading, and Apache Superset dashboard demonstration.
-
-<p align="center">
-    <a href="https://www.youtube.com/watch?v=sWlpLfIKmGI">
-        <img src="https://img.youtube.com/vi/sWlpLfIKmGI/hqdefault.jpg" width="900" alt="Project Demo">
-    </a>
-</p>
-
-<p align="center">
-    <strong>▶ Click the image above to watch the complete demonstration on YouTube.</strong>
-</p>
-
-**Direct link:** https://www.youtube.com/watch?v=sWlpLfIKmGI
-
----
-
-# 📁 Project Structure
-
-```text
-etl-candidates-project/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── diagrams/
-│   ├── star_schema_dw.png
-│   ├── etl-completed.png
-│   └── dashboard.mp4
-│
-├── docker/
-│
-├── notebooks/
-│
-├── sql/
-│
-├── src/
-│   ├── extract.py
-│   ├── transform.py
-│   ├── load.py
-│   └── main.py
-│
-├── docker-compose.yml
-├── requirements.txt
-├── .env.example
-└── README.md
-```
-
----
-
-# 🛠️ Technologies Used
-
-- Python
-- Pandas
-- SQLAlchemy
-- PostgreSQL
-- Docker
-- Docker Compose
-- Apache Superset
-- Redis
-
----
-
-# 📈 Workflow
-
-```text
-CSV Dataset
-      │
-      ▼
-Extract
-      │
-      ▼
-Transform
-      │
-      ▼
-PostgreSQL Data Warehouse
-      │
-      ▼
-Apache Superset
-      │
-      ▼
-Interactive Dashboard
-```
+1.  Clone the repository:
+    ```bash
+    git clone <REPOSITORY_URL>
